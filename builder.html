@@ -30,9 +30,8 @@
 
   </textarea>
 <br>
-  <button name="commit">変換</button>
-  <br>
-  <button name="convert">PDF生成</button>
+  <button name="commit">HTMLに変換</button>
+  <button name="convert">PDFを生成</button>
  </form>
 
 
@@ -43,7 +42,11 @@ function convert(ev){
 	ev.preventDefault();
 	var data=document.getElementById('result').innerHTML;
 	//console.log(data)
-   window.open("view.php?data="+encodeURIComponent(data));
+	if(!data){
+	window.open("view.php?data="+encodeURIComponent(data));
+	}else{
+		alert('「HTMLに変換」を先にしてください');
+	}
 }
 
 void function(document, global){
@@ -65,7 +68,7 @@ void function(document, global){
             resHtml.innerHTML = xhr.responseText;
         };
         xhr.onerror = function(ev){
-            alert('エラーおきた');
+            alert('エラー');
         };
         xhr.send(form.markdown.value);
     }
