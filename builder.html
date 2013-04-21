@@ -9,10 +9,11 @@
 
  <form name="inputs">
   <textarea name="markdown" style="width:50em;height:20em">
-〜〜〜〜サンプル〜〜〜〜
+(〜〜〜〜サンプル〜〜〜〜)
 
 # Scratch でブロック崩しゲームを作ろう
 京都クリエイティブワークショップ
+(最終更新日)
 
 1. スプライトを描こう
 2.  スプライトを動かそう
@@ -42,7 +43,7 @@ function convert(ev){
 	ev.preventDefault();
 	var data=document.getElementById('result').innerHTML;
 	//console.log(data)
-	if(!data){
+	if(data){
 	window.open("view.php?data="+encodeURIComponent(data));
 	}else{
 		alert('「HTMLに変換」を先にしてください');
