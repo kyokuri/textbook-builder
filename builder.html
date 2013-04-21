@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html lang="ja">
+<head>
+ <meta charset="UTF-8">
+ <title>githubのmarkdown APIのテスト</title>
+</head>
+<body>
+ <h1>Githubのmarkdown APIのテスト(JavaScriptのみ)</h1>
+
+ <form name="inputs">
+  <textarea name="markdown" style="width:50em;height:20em">
+# Scratch でブロック崩しゲームを作ろう
+京都クリエイティブワークショップ
+
+1. スプライトを描こう
+2.  スプライトを動かそう
+3.  色々なスプライト、色々な動きを作ってみよう 
+4. ブロック崩しゲームを作ろう
+
+## 1.スプライトを描こう
+
+まずは Scratch を起動しましょう。 これが Scratch の基本画面です。
+
+![Scratchの画面イメージ](http://pastak.cosmio.net/kyokuri_textbook_builder/image/001.png)
+
+次に今回使用しない猫のスプライトを削除しましょう。
+
+
+  </textarea>
+<br>
+  <button name="commit">変換</button>
+  <br>
+  <button name="convert">PDF生成</button>
+ </form>
+
+
+ <div id="result" style="border:1px solid #000; padding:1em"></div>
+
+<script>
+function convert(ev){
+	ev.preventDefault();
+	var data=document.getElementById('result').innerHTML;
+	//console.log(data)
+   window.open("view.php?data="+encodeURIComponent(data));
+}
+
+void function(document, global){
+    var form = document.forms['inputs']
+      , resBox = document.getElementById('response')
+      , resHtml = document.getElementById('result')
+      ;
+
+    form.commit.addEventListener('click', commit);
+	form.convert.addEventListener('click',convert);
+    function commit(ev) {
+        ev.preventDefault();
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'https://api.github.com/markdown/raw');
+        xhr.setRequestHeader('Content-Type', 'text/plain');
+        xhr.onload = function(ev){
+            //resBox.value = xhr.responseText;
+            resHtml.innerHTML = xhr.responseText;
+        };
+        xhr.onerror = function(ev){
+            alert('エラーおきた');
+        };
+        xhr.send(form.markdown.value);
+    }
+
+
+}(document, this);
+</script>
+
+</body>
+</html>
